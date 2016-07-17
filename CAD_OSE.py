@@ -26,7 +26,7 @@ class CAD_OSE(object):
     https://github.com/smirmik/CAD
     '''
 
-    def __init__(self,  minValue, maxValue, baseThreshold = 0.75, restPeriod = 30, maxLeftSemiContextsLenght = 7, maxActiveNeuronsNum = 14, numNormValueBits = 3 ) :
+    def __init__(self,  minValue, maxValue, baseThreshold = 0.75, restPeriod = 30, maxLeftSemiContextsLenght = 7, maxActiveNeuronsNum = 15, numNormValueBits = 3 ) :
 
         self.minValue = float(minValue)
         self.maxValue = float(maxValue)

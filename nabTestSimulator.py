@@ -44,15 +44,15 @@ if __name__ == '__main__':
     
     if testSet == 1 :
         maxLeftSemiContextsLenght = 7
-        maxActiveNeuronsNum = 14     
+        maxActiveNeuronsNum = 15     
         numNormValueBits = 3
-        baseThreshold = 0.74
+        baseThreshold = 0.75
 
     elif testSet == 0 :
-        maxLeftSemiContextsLenght = 15
-        maxActiveNeuronsNum = 22    
+        maxLeftSemiContextsLenght = 8
+        maxActiveNeuronsNum = 16    
         numNormValueBits = 3
-        baseThreshold = 0.74
+        baseThreshold = 1.0
 
 
     projectDirDescriptors = []
