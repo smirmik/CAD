@@ -16,7 +16,7 @@
 # this program.  If not, see http://www.gnu.org/licenses.
 #
 # ------------------------------------------------------------------------------
-
+      
 class ContextOperator():
 
 
@@ -107,7 +107,7 @@ class ContextOperator():
             
             if contextID == nextFreeContextIDNumber :
                 numAddedContexts += 1
-                contextValues = [0, 0, 0, rightFacts, zerolevel, leftHash, rightHash]
+                contextValues = [0, zerolevel, leftHash, rightHash]
 
                 self.contextsValuesList.append(contextValues)
                 if zerolevel :
@@ -117,7 +117,7 @@ class ContextOperator():
                 contextValues = self.contextsValuesList[contextID]
 
                 if zerolevel :
-                    contextValues[4] = 1
+                    contextValues[1] = 1
                     return False
 
 
@@ -131,9 +131,6 @@ class ContextOperator():
                 numNewContexts = self.getContextByFacts (potentialNewContexts)
             else :
                 numNewContexts = 0
-            maxPredWeight = 0.0
-            newPredictions = set()
-            predictionContexts = []
             
         for semiContextValues in self.crossedSemiContextsLists[leftOrRight] :
             semiContextValues[0] = []
@@ -150,18 +147,6 @@ class ContextOperator():
             semiContextValues[2] = lenSemiContextValues0
             if lenSemiContextValues0 > 0 :
                 newCrossedValues.append(semiContextValues)
-                if leftOrRight == 0 and semiContextValues[1] == lenSemiContextValues0 :
-                    for contextID in semiContextValues[3].itervalues():
-                        contextValues = self.contextsValuesList[contextID]
-                        
-                        currPredWeight = contextValues[1] / float(contextValues[0]) if contextValues[0] > 0 else 0.0
-
-                        if currPredWeight >  maxPredWeight :
-                            maxPredWeight = currPredWeight
-                            predictionContexts = [contextValues]
-                            
-                        elif currPredWeight ==  maxPredWeight :
-                            predictionContexts.append(contextValues)
 
         self.crossedSemiContextsLists[leftOrRight] = newCrossedValues
 
@@ -169,19 +154,15 @@ class ContextOperator():
             return self.updateContextsAndGetActive(newContextFlag)
             
         else :
-            [ newPredictions.update(contextValues[3]) for contextValues in predictionContexts ]
-
-            return numNewContexts, newPredictions 
+            return numNewContexts 
 
 
     def updateContextsAndGetActive(self, newContextFlag):
         """
         This function reviews the list of previously selected left semi-contexts,
-        updates the prediction results value of all contexts, including left 
-        semi-contexts, creates the list of potentially new contexts resulted from
-        intersection between zero-level contexts, determines the contexts that
-        coincide with the input data and require activation, prepares the values
-        for calculating anomaly value.
+        creates the list of potentially new contexts resulted from intersection
+        between zero-level contexts, determines the contexts that coincide with
+        the input data and require activation.
 
         @param newContextFlag:         flag indicating that a new zero-level
                                         context is not recorded at the current
@@ -194,7 +175,7 @@ class ContextOperator():
                                         should be considered active and be 
                                         recorded to the input stream of “neurons”
 
-        @return potentialNewContextsLists:  list of contexts based on intersection
+        @return potentialNewContextList:  list of contexts based on intersection
                                         between the left and the right zero-level
                                         semi-contexts, which are potentially new
                                         contexts requiring saving to the context
@@ -202,11 +183,9 @@ class ContextOperator():
 
 
         Эта функция производит обход по списку отобранных ранее левых полуконтекстов,
-        обновляет значения результативности предсказывания у всех контекстов, частью
-        которых являются данные левые полуконтексты, создаёт список контекстов,
-        которые являются результатом пересечения контекстов нулевого уровня и могут
-        быть новыми, определяет какие контексты полностью совпали входными данными и
-        их надо активировать, подготавливает показатели для расчета величины аномалии. 
+        создаёт список контекстов, которые являются результатом пересечения контекстов
+        нулевого уровня и могут быть новыми, определяет какие контексты полностью совпали
+        входными данными и их надо активировать. 
 
 
         @param newContextsFlag:         флаг, указывающий на то, что на текущем шаге не был
@@ -218,7 +197,7 @@ class ContextOperator():
                                         совпавших с входным потоком, которые нужно считать
                                         активными и записать во входной поток "нейроны"
                                         
-        @return potentialNewContextsLists:    список контекстов, созданных на основе
+        @return potentialNewContextList:    список контекстов, созданных на основе
                                         пересечения левых и правых полуконтекстов нулевого
                                         уровня, и потенциально являющихся новыми
                                         контекстами, которые нужно запомнить в памяти
@@ -242,20 +221,18 @@ class ContextOperator():
                     if leftSemiContextValues[1] == leftSemiContextValues[2] :           
 
                         numSelectedContext += 1
-                        contextValues[0] += rightSemiContextValue1
                         
                         if rightSemiContextValue2 > 0 :
-                            contextValues[1] += rightSemiContextValue2
                                 
                             if rightSemiContextValue1 == rightSemiContextValue2 :
-                                contextValues[2] += 1
-                                activeContexts.append([contextID, contextValues[2], contextValues[5], contextValues[6]])
+                                contextValues[0] += 1
+                                activeContexts.append([contextID, contextValues[0], contextValues[2], contextValues[3]])
 
-                            elif contextValues[4] and newContextFlag and leftSemiContextValues[2] <= self.maxLeftSemiContextsLenght :
+                            elif contextValues[1] and newContextFlag and leftSemiContextValues[2] <= self.maxLeftSemiContextsLenght :
                                 potentialNewContextList.append(tuple([tuple(leftSemiContextValues[0]), tuple(rightSemiContextValue0)]))
                         
 
-                    elif contextValues[4] and newContextFlag and rightSemiContextValue2 > 0 and leftSemiContextValues[2] <= self.maxLeftSemiContextsLenght :
+                    elif contextValues[1] and newContextFlag and rightSemiContextValue2 > 0 and leftSemiContextValues[2] <= self.maxLeftSemiContextsLenght :
                         potentialNewContextList.append(tuple([tuple(leftSemiContextValues[0]), tuple(rightSemiContextValue0)]))
 
         self.newContextID = False
