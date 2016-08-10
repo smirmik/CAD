@@ -1,3 +1,5 @@
+!["Yandex.Metrika counter"](https://mc.yandex.ru/watch/38967950)
 # Contextual Anomaly Detector 
 ## Open Source Edition
-!["Yandex.Metrika counter"](https://mc.yandex.ru/watch/38967950) 
+ 
+If you have any questions about the detector - write to email smirmik@gmail.com
