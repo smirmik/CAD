@@ -29,7 +29,7 @@ class CAD_OSE(object):
                         maxValue,
                         baseThreshold = 0.75,
                         restPeriod = 30,
-                        maxLeftSemiContextsLenght = 7,
+                        maxLeftSemiContextsLength = 7,
                         maxActiveNeuronsNum = 15,
                         numNormValueBits = 3 ) :
 
@@ -48,7 +48,7 @@ class CAD_OSE(object):
 
         self.leftFactsGroup = tuple()
         
-        self.contextOperator = ContextOperator( maxLeftSemiContextsLenght )
+        self.contextOperator = ContextOperator( maxLeftSemiContextsLength )
 
         self.potentialNewContexts = []
         
