@@ -43,13 +43,13 @@ if __name__ == '__main__':
 
     
     if TESTSET == 1 :
-        maxLeftSemiContextsLenght = 7
+        maxLeftSemiContextsLength = 7
         maxActiveNeuronsNum = 15     
         numNormValueBits = 3
         baseThreshold = 0.75
 
     elif TESTSET == 0 :
-        maxLeftSemiContextsLenght = 8
+        maxLeftSemiContextsLength = 8
         maxActiveNeuronsNum = 16    
         numNormValueBits = 3
         baseThreshold = 1.0
@@ -100,7 +100,7 @@ if __name__ == '__main__':
                         maxValue = maxValue,
                         baseThreshold = baseThreshold,
                         restPeriod = learningPeriod / 5.0,
-                        maxLeftSemiContextsLenght = maxLeftSemiContextsLenght,
+                        maxLeftSemiContextsLength = maxLeftSemiContextsLength,
                         maxActiveNeuronsNum = maxActiveNeuronsNum,
                         numNormValueBits = numNormValueBits
                     )

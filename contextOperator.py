@@ -20,9 +20,9 @@
 class ContextOperator():
 
 
-    def __init__(self, maxLeftSemiContextsLenght):
+    def __init__(self, maxLeftSemiContextsLength):
 
-        self.maxLeftSemiContextsLenght = maxLeftSemiContextsLenght
+        self.maxLeftSemiContextsLength = maxLeftSemiContextsLength
 
         self.factsDics = [{},{}]
         self.semiContextDics = [{},{}]
@@ -228,11 +228,11 @@ class ContextOperator():
                                 contextValues[0] += 1
                                 activeContexts.append([contextID, contextValues[0], contextValues[2], contextValues[3]])
 
-                            elif contextValues[1] and newContextFlag and leftSemiContextValues[2] <= self.maxLeftSemiContextsLenght :
+                            elif contextValues[1] and newContextFlag and leftSemiContextValues[2] <= self.maxLeftSemiContextsLength :
                                 potentialNewContextList.append(tuple([tuple(leftSemiContextValues[0]), tuple(rightSemiContextValue0)]))
                         
 
-                    elif contextValues[1] and newContextFlag and rightSemiContextValue2 > 0 and leftSemiContextValues[2] <= self.maxLeftSemiContextsLenght :
+                    elif contextValues[1] and newContextFlag and rightSemiContextValue2 > 0 and leftSemiContextValues[2] <= self.maxLeftSemiContextsLength :
                         potentialNewContextList.append(tuple([tuple(leftSemiContextValues[0]), tuple(rightSemiContextValue0)]))
 
         self.newContextID = False
